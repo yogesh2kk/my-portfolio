@@ -32,14 +32,13 @@
       <div>
         <form
           id="contact-form"
-          action="https://formspree.io/f/mnnjznkj"
-          method="POST"
           class="flex flex-col gap-4"
         >
           <input
             type="text"
             name="from_name"
             placeholder="Name"
+            autocomplete="name"
             required
             class="px-4 py-2 bg-[#1414149c] text-[var(--white)] border border-[var(--white-icon-tr)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--sec)]"
           />
@@ -48,6 +47,7 @@
             type="email"
             name="reply_to"
             placeholder="Email"
+            autocomplete="email"
             required
             class="px-4 py-2 bg-[#1414149c] text-[var(--white)] border border-[var(--white-icon-tr)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--sec)]"
           />
@@ -61,6 +61,7 @@
           ></textarea>
 
           <button
+            id="send-btn"
             type="submit"
             class="px-4 py-2 bg-[var(--white-icon-tr)] text-[var(--white)] rounded-lg opacity-60 transition-opacity border border-[var(--white-icon-tr)] hover:opacity-100 hover:bg-[var(--white-icon-tr)]"
           >
@@ -74,35 +75,67 @@
         >
           ✅ Thank you for your message!
         </div>
+
+        <div
+          id="form-error"
+          class="hidden justify-center items-center mt-4 text-red-400 text-sm"
+        >
+          ❌ Sorry — your message could not be sent. Please try again or email me directly.
+        </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- EmailJS (browser SDK) -->
+<script
+  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+  is:inline
+></script>
+
 <script type="module" is:inline>
+  const SERVICE_ID = "service_li6hcnw";
+  const TEMPLATE_ID = "template_t7x55he";
+  const PUBLIC_KEY = "o16skZh9vI8RZtdtv";
+
   const form = document.getElementById("contact-form");
   const formMessage = document.getElementById("form-message");
+  const formError = document.getElementById("form-error");
+  const sendBtn = document.getElementById("send-btn");
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
+  // Safety checks
+  if (!form) {
+    console.error("Contact form not found: #contact-form");
+  } else {
+    // init EmailJS
+    emailjs.init(PUBLIC_KEY);
 
-    try {
-      const response = await fetch(form.action, {
-        method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
-      });
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-      if (response.ok) {
+      // UI state
+      formMessage.classList.add("hidden");
+      formError.classList.add("hidden");
+      sendBtn.setAttribute("disabled", "true");
+      sendBtn.classList.add("opacity-40", "cursor-not-allowed");
+      sendBtn.textContent = "Sending...";
+
+      try {
+        // sendForm maps input name="" values to your template variables:
+        // from_name, reply_to, message
+        await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form);
+
         form.reset();
         form.style.display = "none";
         formMessage.classList.remove("hidden");
-      } else {
-        alert("There was a problem sending your message.");
+      } catch (err) {
+        console.error("EmailJS error:", err);
+        formError.classList.remove("hidden");
+      } finally {
+        sendBtn.removeAttribute("disabled");
+        sendBtn.classList.remove("opacity-40", "cursor-not-allowed");
+        sendBtn.textContent = "Send message";
       }
-    } catch {
-      alert("There was a problem sending your message.");
-    }
-  });
+    });
+  }
 </script>
