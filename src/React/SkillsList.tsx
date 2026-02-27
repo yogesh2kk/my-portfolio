@@ -1,34 +1,47 @@
 import React, { useState } from "react";
 
-const CategoryIcons = {
-  "Web Development": (
+const CategoryIcons: Record<string, React.ReactNode> = {
+  "Data Science & Machine Learning": (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
       className="w-6 h-6 text-[var(--sec)] opacity-70"
     >
-      <path d="M21 3C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H21ZM20 11H4V19H20V11ZM20 5H4V9H20V5ZM11 6V8H9V6H11ZM7 6V8H5V6H7Z"></path>
+      <path d="M4 6.5C4 4.567 5.567 3 7.5 3H20v2H7.5C6.672 5 6 5.672 6 6.5S6.672 8 7.5 8H20v2H7.5C5.567 10 4 8.433 4 6.5ZM4 17.5C4 15.567 5.567 14 7.5 14H20v2H7.5c-.828 0-1.5.672-1.5 1.5S6.672 19 7.5 19H20v2H7.5C5.567 21 4 19.433 4 17.5ZM4 12h16v2H4v-2Z"></path>
     </svg>
   ),
-  "Mobile Development": (
+
+  "Time Series & Forecasting": (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
       className="w-6 h-6 text-[var(--sec)] opacity-70"
     >
-      <path d="M7 4V20H17V4H7ZM6 2H18C18.5523 2 19 2.44772 19 3V21C19 21.5523 18.5523 22 18 22H6C5.44772 22 5 21.5523 5 21V3C5 2.44772 5.44772 2 6 2ZM12 17C12.5523 17 13 17.4477 13 18C13 18.5523 12.5523 19 12 19C11.4477 19 11 18.5523 11 18C11 17.4477 11.4477 17 12 17Z"></path>
+      <path d="M3 3h2v16h16v2H3V3Zm6 12 3-4 3 2 4-6 2 1-6 9-3-2-3 4-2-1Z"></path>
     </svg>
   ),
-  "UI/UX Design & Prototyping": (
+
+  "Quantitative Finance & Econometrics": (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
       className="w-6 h-6 text-[var(--sec)] opacity-70"
     >
-      <path d="M5.7646 7.99998L5.46944 7.26944C5.26255 6.75737 5.50995 6.17454 6.02202 5.96765L15.2939 2.22158C15.8059 2.01469 16.3888 2.26209 16.5956 2.77416L22.2147 16.6819C22.4216 17.194 22.1742 17.7768 21.6622 17.9837L12.3903 21.7298C11.8783 21.9367 11.2954 21.6893 11.0885 21.1772L11.0002 20.9586V21H7.00021C6.44792 21 6.00021 20.5523 6.00021 20V19.7303L2.65056 18.377C2.13849 18.1701 1.89109 17.5873 2.09798 17.0752L5.7646 7.99998ZM8.00021 19H10.2089L8.00021 13.5333V19ZM6.00021 12.7558L4.32696 16.8972L6.00021 17.6084V12.7558ZM7.69842 7.44741L12.5683 19.5008L19.9858 16.5039L15.1159 4.45055L7.69842 7.44741ZM10.6766 9.47974C10.1645 9.68663 9.5817 9.43924 9.37481 8.92717C9.16792 8.4151 9.41532 7.83227 9.92739 7.62538C10.4395 7.41849 11.0223 7.66588 11.2292 8.17795C11.4361 8.69002 11.1887 9.27286 10.6766 9.47974Z"></path>
+      <path d="M3 4h18v2H3V4Zm2 4h14v12H5V8Zm2 2v8h10v-8H7Zm1 6h2v-5H8v5Zm3 0h2v-3h-2v3Zm3 0h2v-7h-2v7Z"></path>
+    </svg>
+  ),
+
+  "Data Analytics, SQL & BI": (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className="w-6 h-6 text-[var(--sec)] opacity-70"
+    >
+      <path d="M4 5c0-1.657 3.582-3 8-3s8 1.343 8 3v14c0 1.657-3.582 3-8 3s-8-1.343-8-3V5Zm8-1c-3.866 0-6 .99-6 1s2.134 1 6 1 6-.99 6-1-2.134-1-6-1Zm0 16c-3.866 0-6 .99-6 1s2.134 1 6 1 6-.99 6-1-2.134-1-6-1Zm0-2c3.866 0 6-.99 6-1V7.9c-1.6.8-4.1 1.1-6 1.1s-4.4-.3-6-1.1V17c0 .01 2.134 1 6 1Z"></path>
     </svg>
   ),
 };
@@ -36,20 +49,38 @@ const CategoryIcons = {
 const SkillsList = () => {
   const [openItem, setOpenItem] = useState<string | null>(null);
 
-  const skills = {
-    "Web Development": [
-      "Single Page Applications (SPAs)",
-      "Landing pages and business websites",
-      "Portfolio websites",
+  // ✅ UPDATED to reflect YOUR actual project experience:
+  // - Walmart forecasting (classical + ML + deep learning)
+  // - Volatility forecasting (GARCH, backtesting, API, SQLite, OOP, TDD)
+  // - Bankruptcy prediction (imbalance handling, pipelines, CV, GridSearch)
+  // - Recommendation system (similarity / feature workflows)
+  const skills: Record<string, string[]> = {
+    "Data Science & Machine Learning": [
+      "End-to-end ML pipelines (imputation, preprocessing, model training) with reproducible experimentation in scikit-learn",
+      "Handling imbalanced classification with under/over-sampling and threshold-based evaluation (precision/recall trade-offs)",
+      "Model selection and tuning using k-fold cross-validation + GridSearchCV across tree-based and ensemble methods",
+      "Building recommendation workflows using feature engineering + similarity scoring to surface personalized results",
     ],
-    "Mobile Development": [
-      "Mobile-friendly web apps",
-      "React Native mobile apps",
+
+    "Time Series & Forecasting": [
+      "Time-series feature engineering and structured backtesting to compare approaches fairly across multiple series",
+      "Classical forecasting baselines and statistical modeling (trend/seasonality analysis, ARIMA-style approaches when appropriate)",
+      "Machine learning forecasting using engineered lag/rolling features with strong validation discipline",
+      "Deep learning forecasting (LSTM-style sequence models) and model comparison against classical baselines",
     ],
-    "UI/UX Design & Prototyping": [
-      "UI design with Figma & Canva",
-      "UX research & improvements",
-      "Prototyping for websites & mobile apps",
+
+    "Quantitative Finance & Econometrics": [
+      "Volatility modeling using GARCH-family workflows: data wrangling, training, diagnostics, and forecast generation",
+      "Econometric thinking for financial data: assumptions, uncertainty, and interpretable model behavior",
+      "Production-minded analytics: saving/loading models, versionable pipelines, and reliable evaluation for financial series",
+      "Building data services around models (FastAPI + typed request/response objects) to support reusable inference",
+    ],
+
+    "Data Analytics, SQL & BI": [
+      "Data wrangling and exploratory analysis with clear visuals to communicate findings and model behavior",
+      "Working with structured storage for analysis (SQLite repositories / SQL-style workflows) to keep data reliable and repeatable",
+      "Delivering stakeholder-friendly outputs: concise narratives, charts, and summaries that support decisions",
+      "Defensive programming practices to make data pipelines robust (validation, error handling, clean interfaces)",
     ],
   };
 
@@ -60,23 +91,37 @@ const SkillsList = () => {
   return (
     <div className="text-left pt-3 md:pt-9">
       <h3 className="text-[var(--white)] text-3xl md:text-4xl font-semibold md:mb-6">
-        What I do?
+        How I Work with Data
       </h3>
+
+      <p className="text-[var(--white-icon)] opacity-80 mt-2 md:mt-0 mb-5 max-w-xl">
+        A snapshot of the methods I use in real projects—covering analytics,
+        modeling, forecasting, and production-style workflows.
+      </p>
+
       <ul className="space-y-4 mt-4 text-lg">
         {Object.entries(skills).map(([category, items]) => (
           <li key={category} className="w-full">
             <div
               onClick={() => toggleItem(category)}
-              className="md:w-[400px] w-full bg-[#1414149c] rounded-2xl text-left hover:bg-opacity-80 transition-all border border-[var(--white-icon-tr)] cursor-pointer overflow-hidden"
+              className="md:w-[420px] w-full bg-[#1414149c] rounded-2xl text-left hover:bg-opacity-80 transition-all border border-[var(--white-icon-tr)] cursor-pointer overflow-hidden"
             >
               <div className="flex items-center gap-3 p-4">
-                {CategoryIcons[category]}
+                {/* ✅ lock icon container width and prevent shrinking */}
+                <div className="w-6 h-6 flex items-center justify-center flex-shrink-0">
+                  {CategoryIcons[category] ?? (
+                    <div className="w-6 h-6 rounded-md bg-[var(--sec)] opacity-30" />
+                  )}
+                </div>
+
                 <div className="flex items-center gap-2 flex-grow justify-between">
-                  <div className="min-w-0 max-w-[200px] md:max-w-none overflow-hidden">
-                    <span className="block truncate text-[var(--white)] text-lg">
+                  {/* ✅ allow long titles to wrap */}
+                  <div className="min-w-0 md:max-w-none overflow-hidden">
+                    <span className="block whitespace-normal text-[var(--white)] text-lg">
                       {category}
                     </span>
                   </div>
+
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -93,15 +138,15 @@ const SkillsList = () => {
               <div
                 className={`transition-all duration-300 px-4 ${
                   openItem === category
-                    ? "max-h-[500px] pb-4 opacity-100"
+                    ? "max-h-[650px] pb-4 opacity-100"
                     : "max-h-0 opacity-0"
                 }`}
               >
                 <ul className="space-y-2 text-[var(--white-icon)] text-sm">
                   {items.map((item, index) => (
-                    <div key={index} className="flex items-center">
-                      <span className="pl-1">•</span>
-                      <li className="pl-3">{item}</li>
+                    <div key={index} className="flex items-start">
+                      <span className="pl-1 leading-5">•</span>
+                      <li className="pl-3 leading-5">{item}</li>
                     </div>
                   ))}
                 </ul>

@@ -12,25 +12,38 @@ const { title } = Astro.props;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Software Developer" />
+
+    <!-- SEO -->
+    <meta
+      name="description"
+      content="Portfolio of Yogesh Kumar — data science and quantitative analytics work in machine learning, time-series forecasting, and financial econometrics."
+    />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta property="og:title" content="Oscar Hernandez" />
-    <meta property="og:description" content="Software Developer" />
-    <meta property="og:image" content="https://oscarhernandez.vercel.app/og.image.png" />
-    <meta property="og:url" content="https://oscarhernandez.vercel.app" />
+
+    <!-- OpenGraph (social preview) -->
+    <meta property="og:title" content="Yogesh Kumar — Data Science & Quant Analytics" />
+    <meta
+      property="og:description"
+      content="Data science, analytics, and quantitative finance portfolio featuring machine learning, time-series forecasting, and financial econometrics projects."
+    />
+
+    <!-- Update this later after deployment -->
+    <meta property="og:image" content="/og.image.png" />
+    <meta property="og:url" content="https://your-portfolio.vercel.app" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Oscar Hernandez Portfolio" />
+    <meta property="og:site_name" content="Yogesh Kumar Portfolio" />
 
     <title>{title}</title>
   </head>
+
   <body class="bg-[--background] sm:px-28 lg:px-20 px-9">
     <slot />
   </body>
 </html>
 
 <style is:global>
-
   :root {
     --background: #101010;
     --sec: #a476ff;
@@ -55,8 +68,6 @@ const { title } = Astro.props;
     color: var(--background);
   }
 
-  /* Scrollbar styles */
-
   ::-webkit-scrollbar {
     width: 15px;
   }
@@ -75,7 +86,6 @@ const { title } = Astro.props;
     background: var(--pink);
   }
 
-  /* Scrollbar styles for Firefox */
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--line) var(--container);
