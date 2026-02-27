@@ -95,7 +95,7 @@ const SkillsList = () => {
       </h3>
 
       <p className="text-[var(--white-icon)] opacity-80 mt-2 md:mt-0 mb-5 max-w-xl">
-        A snapshot of the methods I use in real projects—covering analytics,
+        A snapshot of the methods I use in real projects-covering analytics,
         modeling, forecasting, and production-style workflows.
       </p>
 
